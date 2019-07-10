@@ -7,7 +7,9 @@ from config import config
 class toggleTimers:
     def __init__(self):
         self.config = config()
+        #Set the time entries
         self.timeEntries = []
+        self._getTimeEntries()
 
     def _getTodaysDate(self):
         today = datetime.datetime.now()
@@ -33,10 +35,27 @@ class toggleTimers:
             "Harvest-Account-ID": self.config.accountId
         }
         return headers
-    
-    def _makeRequest(self, url):
-        #TODO handle data and post requetss
+
+    def _getTimeEntries(self):
+        url = self.config.baseurl + '?from=' + self._getTodaysDate()
+        timeEntryHolder = []
+        entries = self._makeRequest(url=url)
+        i = 0 
+        while i < len(entries['time_entries']):
+            timeEntry = entries['time_entries'][i]
+            #only clients get swiches
+            if(timeEntry != "LookThink"):
+                timeEntryHolder.append(timeEntry)
+            i += 1 
+
+        self.timeEntries = timeEntryHolder
+        return timeEntryHolder
+
+    def _makeRequest(self, url, isPatch=False):
         request = urllib.request.Request(url=url, headers=self._getHeaders())
+        if(isPatch):
+            request.get_method = lambda: 'PATCH'
+
         try: 
             response = urllib.request.urlopen(request, timeout=5)
             responseBody = response.read().decode("utf-8")
@@ -46,15 +65,21 @@ class toggleTimers:
 
         except urllib.error.URLError as e:
             print(e.reason)
-    
-    def getTodaysTimeEntries(self):
-        if(len(self.timeEntries) == 0): 
-            url = self.config.baseurl + '/time_entries?from=' + self._getTodaysDate()
-            self.timeEntries = self._makeRequest(url=url)
 
-        return self.timeEntries 
+    def setTimer(self, index, turnOn):
+        #Ensure index is within bounds it's pssoible there 
+        #will be more switches than time entries
+        if(index < len(self.timeEntries)):
+            print(self.timeEntries[index])
+            url = self.config.baseurl + '/'+ str(self.timeEntries[index]['id'])
+            if(turnOn):
+                url += '/restart'
+            else:
+                url += '/stop'
+
+            self._makeRequest(url, True)
 
 
 if __name__ == "__main__":
     tt = toggleTimers()
-    print(tt.getTodaysTimeEntries())
+    tt.setTimer(0, True)
