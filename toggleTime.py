@@ -10,6 +10,8 @@ class toggleTimers:
         #Set the time entries
         self.timeEntries = []
         self._getTimeEntries()
+        print('Switch is controlling timer for: ')
+        print(self.timeEntries[0]['client']['name'])
 
     def _getTodaysDate(self):
         today = datetime.datetime.now()
@@ -69,7 +71,6 @@ class toggleTimers:
         #Ensure index is within bounds it's pssoible there 
         #will be more switches than time entries
         if(index < len(self.timeEntries)):
-            print(self.timeEntries[index])
             url = self.config.baseurl + '/'+ str(self.timeEntries[index]['id'])
             if(turnOn):
                 url += '/restart'
@@ -77,8 +78,3 @@ class toggleTimers:
                 url += '/stop'
 
             self._makeRequest(url, True)
-
-
-if __name__ == "__main__":
-    tt = toggleTimers()
-    tt.setTimer(0, True)
