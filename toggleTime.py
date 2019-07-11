@@ -40,9 +40,7 @@ class toggleTimers:
         url = self.config.baseurl + '?from=' + self._getTodaysDate()
         timeEntryHolder = []
         entries = self._makeRequest(url=url, isPatch=False)
-        print(entries)
         i = 0 
-        print(entries['time_entries'])
         while i < len(entries['time_entries']):
             timeEntry = entries['time_entries'][i]
             #only clients get swiches
@@ -62,8 +60,6 @@ class toggleTimers:
             response = urllib.request.urlopen(request, timeout=5)
             responseBody = response.read().decode("utf-8")
             jsonResponse = json.loads(responseBody)
-            print(jsonResponse)
-            print('------------------------')
             return jsonResponse
 
         except urllib.error.URLError as e:
