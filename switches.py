@@ -1,6 +1,6 @@
 import time
 import RPi.GPIO as GPIO
-import toggleTime
+from toggleTime import toggleTimers
 
 #initialise a previous input variable to 0 (assume button not pressed last)
 prev_input = 0
