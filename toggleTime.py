@@ -38,6 +38,7 @@ class toggleTimers:
 
     def _getTimeEntries(self):
         url = self.config.baseurl + '?from=' + self._getTodaysDate()
+        print(url)
         timeEntryHolder = []
         entries = self._makeRequest(url=url, isPatch=False)
         print(entries)
