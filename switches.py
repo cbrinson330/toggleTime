@@ -7,7 +7,7 @@ from switch import switch
 prev_input = 0
 
 #list for button objs
-swtichObjList = [SimpleClass(count) for count in range(4)]
+swtichObjList = []
 
 #Setup button
 switchPins = [2, 3, 4, 14]
@@ -15,13 +15,14 @@ switchPins = [2, 3, 4, 14]
 #init button pin objects
 timerIndex = 0
 for switchPin in switchPins:
-  switchobj = switch(switchIndex, timerIndex)
-  switchObjList.append(switchobj)
+  switchobj = switch(switchPin, timerIndex)
+  swtichObjList.append(switchobj)
   timerIndex += 1
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 for pin in switchPins:
+  print(pin)
   GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pins to be input pins and set initial value to be pulled low (off)
 
 tt = toggleTimers()
