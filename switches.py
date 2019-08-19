@@ -20,7 +20,7 @@ for switchPin in switchPins:
   timerIndex += 1
 
 GPIO.setwarnings(False) # Ignore warning for now
-GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+GPIO.setmode(GPIO.BCM) # Use physical pin numbering
 for pin in switchPins:
   print(pin)
   GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pins to be input pins and set initial value to be pulled low (off)
