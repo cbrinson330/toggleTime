@@ -10,7 +10,7 @@ prev_input = 0
 swtichObjList = []
 
 #Setup button
-switchPins = [2, 3, 4, 14]
+switchPins = [27, 17, 4, 18]
 
 #init button pin objects
 timerIndex = 0

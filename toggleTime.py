@@ -10,8 +10,13 @@ class toggleTimers:
         #Set the time entries
         self.timeEntries = []
         self._getTimeEntries()
+    
+        # A little UI for explaining what the switches controll
         print('Switch is controlling timer for: ')
-        print(self.timeEntries[0]['client']['name'])
+        switchIndex = 0
+        for client in self.timeEntries:
+            print(str(switchIndex) + ' = ' + client['client']['name'])
+            switchIndex += 1
 
     def _getTodaysDate(self):
         today = datetime.datetime.now()
@@ -40,7 +45,6 @@ class toggleTimers:
 
     def _getTimeEntries(self):
         url = self.config.baseurl + '?from=' + self._getTodaysDate()
-        print(url)
         timeEntryHolder = []
         entries = self._makeRequest(url=url, isPatch=False)
         i = 0 
