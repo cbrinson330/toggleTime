@@ -2,27 +2,23 @@ import time
 import RPi.GPIO as GPIO
 from toggleTime import toggleTimers
 from switch import switch
-
-#initialise a previous input variable to 0 (assume button not pressed last)
-prev_input = 0
+from config import config
 
 #list for button objs
 swtichObjList = []
 
-#Setup button
-switchPins = [27, 17, 4, 18]
-
 #init button pin objects
 timerIndex = 0
-for switchPin in switchPins:
+for switchPin in config.switchPins:
   switchobj = switch(switchPin, timerIndex)
   swtichObjList.append(switchobj)
   timerIndex += 1
 
-GPIO.setwarnings(False) # Ignore warning for now
-GPIO.setmode(GPIO.BCM) # Use physical pin numbering
+GPIO.setwarnings(False) 
+GPIO.setmode(GPIO.BCM)
 for pin in switchPins:
-  GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pins to be input pins and set initial value to be pulled low (off)
+  # Set pins to be input pins and set initial value to be pulled low (off)
+  GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) 
 
 tt = toggleTimers()
 

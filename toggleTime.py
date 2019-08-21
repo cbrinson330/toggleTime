@@ -51,7 +51,7 @@ class toggleTimers:
         while i < len(entries['time_entries']):
             timeEntry = entries['time_entries'][i]
             #only clients get swiches
-            if(timeEntry != "LookThink"):
+            if(timeEntry not in config.clientBlacklist)
                 timeEntryHolder.append(timeEntry)
             i += 1 
 
